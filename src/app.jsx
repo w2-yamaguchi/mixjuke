@@ -110,7 +110,10 @@ class App extends React.Component {
         };
 
         const requestMix = () => {
-            axios.get('http://localhost:4000/mix_juke?id=', dirname)
+            axios.get('http://localhost:4000/mix_juke',{
+		params: {
+			id: dirname
+		}})
             .then((response) => {
                 console.log(response);
             })

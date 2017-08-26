@@ -25320,7 +25320,7 @@ var App = function (_React$Component) {
                 formData.append('file', music);
                 formData.append('dir', dirname);
 
-                _axios2.default.post('http://13.113.255.229:8081/file_upload', formData).then(function (response) {
+                _axios2.default.post('http://localhost:8081/file_upload', formData).then(function (response) {
                     console.log(response);
                 }).catch(function (error) {
                     console.log(error);
@@ -25349,7 +25349,10 @@ var App = function (_React$Component) {
             };
 
             var requestMix = function requestMix() {
-                _axios2.default.get('http://localhost:4000/mix_juke?id=', dirname).then(function (response) {
+                _axios2.default.get('http://localhost:4000/mix_juke', {
+                    params: {
+                        id: dirname
+                    } }).then(function (response) {
                     console.log(response);
                 }).catch(function (error) {
                     console.log(error);
@@ -25358,9 +25361,10 @@ var App = function (_React$Component) {
 
             var play = function play(e) {
                 e.preventDefault();
-                var player = document.querySelector('#player');
-                player.playing = !player.playing;
-                console.log(player.playing);
+                document.querySelector('#player').playing = true;
+                // let player = document.querySelector('#player');
+                // player.playing = !player.playing;
+                // console.log(player.playing);
             };
 
             return _react2.default.createElement(
@@ -25396,7 +25400,7 @@ var App = function (_React$Component) {
                     ),
                     _react2.default.createElement(_materialUi.RaisedButton, { label: 'Upload', primary: true, fullWidth: true, onClick: uploadFiles }),
                     _react2.default.createElement(_materialUi.RaisedButton, { label: 'Mix', primary: true, fullWidth: true, onClick: requestMix }),
-                    _react2.default.createElement(_reactPlayer2.default, { id: 'player', url: this.state.mixedMusic, playing: true }),
+                    _react2.default.createElement(_reactPlayer2.default, { id: 'player', url: this.state.mixedMusic, playing: false }),
                     _react2.default.createElement(_materialUi.RaisedButton, { label: 'Play', secondary: true, fullWidth: true, onClick: play })
                 )
             );
