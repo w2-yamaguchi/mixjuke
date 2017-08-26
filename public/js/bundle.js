@@ -24641,18 +24641,12 @@ var App = function (_React$Component) {
                 });
             };
 
-            // const uploadFiles = () => {
-            async function uploadFiles() {
-                var noteFiles = this.state.notes;
-
-                setTimeout(console.log('hello'), 3000);
+            var uploadFiles = function uploadFiles() {
+                var noteFiles = _this2.state.notes;
 
                 noteFiles.map(function (note) {
-                    setTimeout(console.log('world'), 1000);
                     uploadFile(note.music);
                 });
-
-                setTimeout(console.log('foo'), 3000);
             };
 
             return _react2.default.createElement(
