@@ -15,6 +15,7 @@
     "material-ui-upload": "^1.2.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-player": "^0.20.0",
     "uuid": "^3.1.0"
   }
 }

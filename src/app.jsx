@@ -6,6 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { AppBar, Card, CardHeader, CardText, GridList, GridTile, RaisedButton, Slider, TextField } from 'material-ui';
+import ReactPlayer from 'react-player';
 
 class App extends React.Component {
     constructor(props) {
@@ -49,7 +50,8 @@ class App extends React.Component {
                     music: {}
                 }
             ],
-            flag: 0
+            flag: 0,
+            mixedMusic: 'http://localhost:3000/assets/Dork.mp3'
         };
     }
 
@@ -77,7 +79,7 @@ class App extends React.Component {
             formData.append('file', music);
             formData.append('dir', dirname);
 
-            axios.post('http://13.113.255.229:8081/file_upload', formData)
+            axios.post('http://localhost:8081/file_upload', formData)
             .then(function (response) {
                 console.log(response);
             })
@@ -108,13 +110,21 @@ class App extends React.Component {
         };
 
         const requestMix = () => {
-            axios.get('http://localhost:3000')
+            axios.get('http://localhost:4000/mix_juke?id=', dirname)
             .then((response) => {
-                console.log(this.state.flag);
+                console.log(response);
             })
             .catch((error) => {
                 console.log(error);
             });
+        };
+
+        const play = (e) => {
+            e.preventDefault();
+            document.querySelector('#player').playing = true;
+            // let player = document.querySelector('#player');
+            // player.playing = !player.playing;
+            // console.log(player.playing);
         };
 
         return (
@@ -136,7 +146,9 @@ class App extends React.Component {
                         ))}
                     </GridList>
                     <RaisedButton label="Upload" primary={true} fullWidth={true} onClick={uploadFiles} />
-                    <RaisedButton label="Mix" secondary={true} fullWidth={true} onClick={requestMix} />
+                    <RaisedButton label="Mix" primary={true} fullWidth={true} onClick={requestMix} />
+                    <ReactPlayer id="player" url={this.state.mixedMusic} playing={false} />
+                    <RaisedButton label="Play" secondary={true} fullWidth={true} onClick={play} />
                 </article>
             </MuiThemeProvider>
         );
