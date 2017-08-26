@@ -24602,7 +24602,8 @@ var App = function (_React$Component) {
                 title: '音源6',
                 avatar: '/assets/note_navy.png',
                 music: {}
-            }]
+            }],
+            flag: 0
         };
         return _this;
     }
@@ -24629,6 +24630,7 @@ var App = function (_React$Component) {
                 _this2.setState({ notes: notes });
             };
 
+            // const uploadFile = async (music) => {
             var uploadFile = function uploadFile(music) {
                 var formData = new FormData();
                 formData.append('file', music);
@@ -24639,13 +24641,34 @@ var App = function (_React$Component) {
                 }).catch(function (error) {
                     console.log(error);
                 });
+
+                _this2.setState({ flag: _this2.state.flag + 1 });
+                return _this2.state.flag;
             };
 
+            // const uploadFiles = async () => {
             var uploadFiles = function uploadFiles() {
                 var noteFiles = _this2.state.notes;
+                var flag = 0;
 
                 noteFiles.map(function (note) {
-                    uploadFile(note.music);
+                    flag = uploadFile(note.music);
+                });
+
+                // axios.get('http://localhost:3000')
+                // .then(function (response) {
+                //     console.log(flag);
+                // })
+                // .catch(function (error) {
+                //     console.log(flag);
+                // });
+            };
+
+            var requestMix = function requestMix() {
+                _axios2.default.get('http://localhost:3000').then(function (response) {
+                    console.log(_this2.state.flag);
+                }).catch(function (error) {
+                    console.log(error);
                 });
             };
 
@@ -24680,8 +24703,8 @@ var App = function (_React$Component) {
                             );
                         })
                     ),
-                    _react2.default.createElement(_materialUi.Slider, { defaultValue: 0.5 }),
-                    _react2.default.createElement(_materialUi.RaisedButton, { label: 'Mix', primary: true, fullWidth: true, onClick: uploadFiles })
+                    _react2.default.createElement(_materialUi.RaisedButton, { label: 'Upload', primary: true, fullWidth: true, onClick: uploadFiles }),
+                    _react2.default.createElement(_materialUi.RaisedButton, { label: 'Mix', secondary: true, fullWidth: true, onClick: requestMix })
                 )
             );
         }

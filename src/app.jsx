@@ -48,7 +48,8 @@ class App extends React.Component {
                     avatar: '/assets/note_navy.png',
                     music: {}
                 }
-            ]
+            ],
+            flag: 0
         };
     }
 
@@ -70,6 +71,7 @@ class App extends React.Component {
             this.setState({ notes: notes });
         };
 
+        // const uploadFile = async (music) => {
         const uploadFile = (music) => {
             let formData = new FormData();
             formData.append('file', music);
@@ -82,13 +84,36 @@ class App extends React.Component {
             .catch(function (error) {
                 console.log(error);
             });
+
+            this.setState({ flag: this.state.flag + 1 });
+            return this.state.flag;
         };
 
+        // const uploadFiles = async () => {
         const uploadFiles = () => {
             let noteFiles = this.state.notes;
+            let flag = 0;
 
             noteFiles.map((note) => {
-                uploadFile(note.music);
+                flag = uploadFile(note.music);
+            });
+
+            // axios.get('http://localhost:3000')
+            // .then(function (response) {
+            //     console.log(flag);
+            // })
+            // .catch(function (error) {
+            //     console.log(flag);
+            // });
+        };
+
+        const requestMix = () => {
+            axios.get('http://localhost:3000')
+            .then((response) => {
+                console.log(this.state.flag);
+            })
+            .catch((error) => {
+                console.log(error);
             });
         };
 
@@ -110,8 +135,8 @@ class App extends React.Component {
                             </GridTile>
                         ))}
                     </GridList>
-                    <Slider defaultValue={0.5} />
-                    <RaisedButton label="Mix" primary={true} fullWidth={true} onClick={uploadFiles} />
+                    <RaisedButton label="Upload" primary={true} fullWidth={true} onClick={uploadFiles} />
+                    <RaisedButton label="Mix" secondary={true} fullWidth={true} onClick={requestMix} />
                 </article>
             </MuiThemeProvider>
         );
